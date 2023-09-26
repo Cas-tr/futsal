@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "594168460128",
+    "firebase_url": "https://tuchop-a5481-default-rtdb.firebaseio.com",
+    "project_id": "tuchop-a5481",
+    "storage_bucket": "tuchop-a5481.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594168460128:android:c6d61dff0ff204600d6405",
+        "android_client_info": {
+          "package_name": "com.example.futsal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "594168460128-ekc487ng6nb59qgu5e6p00mlcsqpsg7k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF6nK3K2VSmCJaUh54WoKXNXcS7pvPmmA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "594168460128-ekc487ng6nb59qgu5e6p00mlcsqpsg7k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
