@@ -29,9 +29,9 @@ import com.google.firebase.database.ValueEventListener
         }
 
 
-        fun saveTeacher(name:String,email:String,phoneNumber :String,levelOfEducation:String,school:String){
+        fun saveTeacher(name:String,email:String,phoneNumber :String,levelOfEducation:String,school:String,subject:String){
             var id = System.currentTimeMillis().toString()
-            var teacherData = Teacher(name,email,phoneNumber,levelOfEducation,school,id)
+            var teacherData = Teacher(name,email,phoneNumber,levelOfEducation,school,subject,id)
             var teacherRef = FirebaseDatabase.getInstance().getReference()
                 .child("Teacher/$id")
             progress.show()
@@ -81,11 +81,11 @@ import com.google.firebase.database.ValueEventListener
             }
         }
 
-        fun updateTeacher(name: String,email: String,phoneNumber: String,levelOfEducation: String,school: String,id:String){
+        fun updateTeacher(name: String,email: String,phoneNumber: String,levelOfEducation: String,school: String,subject:String,id:String){
             var updateRef = FirebaseDatabase.getInstance().getReference()
                 .child("Teacher/$id")
             progress.show()
-            var updateData = Teacher(name,email,phoneNumber,levelOfEducation,school, id)
+            var updateData = Teacher(name,email,phoneNumber,levelOfEducation,school,subject, id)
             updateRef.setValue(updateData).addOnCompleteListener {
                 progress.dismiss()
                 if (it.isSuccessful){

@@ -1,6 +1,10 @@
 package com.example.futsal.ui.theme.pages.teacher
 
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
@@ -23,6 +29,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.futsal.data.TeacherRepository
@@ -42,7 +50,7 @@ fun ViewTeachersScreen(navController: NavHostController) {
         var teacherRepository = TeacherRepository(navController, context)
 
 
-        val emptyTeacherState = remember { mutableStateOf(Teacher("","","","","","")) }
+        val emptyTeacherState = remember { mutableStateOf(Teacher("","","","","","","")) }
         var emptyTeacherListState = remember { mutableStateListOf<Teacher>() }
 
         var teachers = teacherRepository.viewTeacher(emptyTeacherState, emptyTeacherListState)
@@ -68,6 +76,7 @@ fun ViewTeachersScreen(navController: NavHostController) {
                         phoneNumber = it.phoneNumber,
                         levelOfEducation = it.levelOfEducation,
                         school = it.school,
+                        subject = it.subject,
                         id = it.userId,
                         navController = navController,
                         teacherRepository = teacherRepository
@@ -80,16 +89,18 @@ fun ViewTeachersScreen(navController: NavHostController) {
 
 
 @Composable
-fun TeachersItem(name:String, email:String, phoneNumber:String, levelOfEducation:String, school:String,id:String,
+fun TeachersItem(name:String, email:String, phoneNumber:String, levelOfEducation:String, school:String,subject:String,id:String,
                 navController: NavHostController, teacherRepository: TeacherRepository
 ) {
+    var context = LocalContext.current
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Card(modifier = Modifier.fillMaxWidth()) {
         Text(text = name)
         Text(text = email)
         Text(text = phoneNumber)
         Text(text = levelOfEducation)
         Text(text = school)
+        Text(text = subject)
         Button(onClick = {
             teacherRepository.deleteTeacher(id)
         }) {
@@ -100,8 +111,27 @@ fun TeachersItem(name:String, email:String, phoneNumber:String, levelOfEducation
         }) {
             Text(text = "Update")
         }
+        Button(onClick = {
+            val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber))
+            if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    Activity(),
+                    arrayOf<String>(android.Manifest.permission.CALL_PHONE),
+                    1
+                )
+            } else {
+                context.startActivity(intent)
+            }
+
+        },colors = ButtonDefaults.buttonColors(containerColor = Color.Red, contentColor = Color.White) ){
+            Text(text = "Contact")
+        }
+
+            
+        }
     }
-}
+
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable

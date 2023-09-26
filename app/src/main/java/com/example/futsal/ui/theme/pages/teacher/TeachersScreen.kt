@@ -68,6 +68,8 @@ fun TeachersScreen(navController: NavHostController) {
         var levelOfEducation by remember { mutableStateOf("") }
         var isExpanded by remember { mutableStateOf(false) }
         var school by remember { mutableStateOf(TextFieldValue("")) }
+        var subject by remember { mutableStateOf("") }
+
 
         TextField(
             value = name,
@@ -127,22 +129,128 @@ fun TeachersScreen(navController: NavHostController) {
 
             }
         }
-            Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(20.dp))
+        TextField(
+            value = school,
+            onValueChange = { school = it },
+            label = { Text(text = "School*") },
+            leadingIcon = { Icon(imageVector = Icons.Default.Create, contentDescription = null) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+
+        ExposedDropdownMenuBox(expanded = isExpanded, onExpandedChange = { isExpanded = it }
+        ) {
             TextField(
-                value = school,
-                onValueChange = { school = it },
-                label = { Text(text = "School*") },
-                leadingIcon = { Icon(imageVector = Icons.Default.Create, contentDescription = null) },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                value = subject,
+                onValueChange = {},
+                readOnly = true,
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
+                },
+                colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                modifier = Modifier.menuAnchor(),
+                label = { Text(text = "Subject") }
             )
-            Spacer(modifier = Modifier.height(20.dp))
+            ExposedDropdownMenu(expanded = isExpanded, onDismissRequest = { isExpanded = false }
+            ) {
+                DropdownMenuItem(
+                    text = { Text(text = "Mathematics") },
+                    onClick = {
+                        subject = "Mathematics"
+//                        isExpanded = false
+                    })
+                DropdownMenuItem(
+                    text = { Text(text = "English") },
+                    onClick = {
+                        subject = "English"
+//                        isExpanded = false
+
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(text = "Kiswahili") },
+                    onClick = {
+                        subject = "Kiswahili"
+//                        isExpanded = false
+
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(text = "Science") },
+                    onClick = {
+                        subject = "Science"
+//                        isExpanded = false
+
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(text = "Social Studies") },
+                    onClick = {
+                        subject = "Social Studies"
+//                        isExpanded = false
+
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(text = "CRE") },
+                    onClick = {
+                        subject = "CRE"
+//                        isExpanded = false
+
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(text = "Physics") },
+                    onClick = {
+                        subject = ""
+//                        isExpanded = false
+
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(text = "Biology") },
+                    onClick = {
+                        subject = "Biology"
+//                        isExpanded = false
+
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(text = "Geography") },
+                    onClick = {
+                        subject = "Geography"
+//                        isExpanded = false
+
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(text = "History") },
+                    onClick = {
+                        subject = "History"
+//                        isExpanded = false
+
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(text = "Chemistry") },
+                    onClick = {
+                        subject = "Chemistry"
+//                        isExpanded = false
+
+                    }
+                )
+
+            }
+        }
+
             Button(
                 onClick = {
                     var teacherRepository = TeacherRepository(navController, context)
                     teacherRepository.saveTeacher(
                         name.text.trim(), email.text.trim(),
                         phoneNumber.text.trim(), levelOfEducation.trim(),
-                        school.text.trim()
+                        school.text.trim(), subject.trim()
                     )
                     navController.navigate(ROUTE_HOME)
                 },
@@ -156,6 +264,7 @@ fun TeachersScreen(navController: NavHostController) {
 
 
 //}
+
     }
 }
 @Preview(showBackground = true,uiMode = Configuration.UI_MODE_NIGHT_NO)
